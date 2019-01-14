@@ -27,7 +27,7 @@ class Genotype(models.Model):
     class Meta:
         unique_together = (('snp', 'allele'),)
 
-    snp = models.ForeignKey('Snp')
+    snp = models.ForeignKey('Snp',on_delete=models.CASCADE)
     allele1 = models.CharField(max_length=10, default='')
     allele2 = models.CharField(max_length=10, default='')
     allele = models.CharField(max_length=10, default='')

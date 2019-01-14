@@ -6,6 +6,7 @@ django.setup()
 from django.template import *
 from baike.models import *
 
+
 def equal(a, b):
     a = a.upper()
     b = b.upper()
@@ -28,6 +29,11 @@ args = parser.parse_args()
 
 input_ = args.input
 output = args.output
+
+
+def file(input):
+    with open(input) as f:
+        return f.readlines()
 
 data = {}
 for line in file(input_):
@@ -68,18 +74,20 @@ if args.report_type == 'html':
     shutil.copytree('report_template', args.output)
 
     fn_cn = os.path.join(args.output, 'report_cn.html')
-    t =  Template(open('report_template/template_cn.html').read())
+    t = Template(open('report_template/template_cn.html').read())
     c = Context({'matched': matched})
-    s = t.render(c).encode('u8')
+    s = t.render(c)#.encode('u8')
     open(fn_cn, 'w').write(s)
 
     fn_en = os.path.join(args.output, 'report.html')
-    t =  Template(open('report_template/template_en.html').read())
+    t = Template(open('report_template/template_en.html').read())
     c = Context({'matched': matched})
-    s = t.render(c).encode('u8')
+    s = t.render(c)#.encode('u8')
     open(fn_en, 'w').write(s)
     
     t1 = os.path.join(args.output, 'template_cn.html')
     os.remove(t1)
     t2 = os.path.join(args.output, 'template_en.html')
     os.remove(t2)
+
+
